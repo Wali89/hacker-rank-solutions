@@ -1,15 +1,30 @@
 function minimumBribes(q) {
-console.log(sort(q));
+  let bribes = 0;
+  let swapped = true;
+  let tooChaotic = false;
+  let firstRun = true;
 
-    function sort(items) {
-     let bribes = 0;
+  while (swapped === true) {
+    swapped = false;
+    for (let i = 0; q.length > i; i++) {
+      if (q[i] - i > 3 && firstRun) {
+        tooChaotic = true;
+      }
 
-     for (let i = 0; i < items.length; i++) {
-         if (items[i] - (i + 1) > 2) return "Too chaotic";
-         for (let j = 0; j < i; j++) {
-             if (items[j] > items[i]) bribes++;
-         }
-     } 
-     return bribes;
-   }
+      if (q[i] && q[i + 1] && q[i] > q[i + 1]) {
+        let temp = q[i];
+        q[i] = q[i + 1];
+        q[i + 1] = temp;
+        swapped = true;
+        bribes++;
+      }
+    }
+    firstRun = false;
+  }
+
+  if (tooChaotic) {
+    console.log("Too chaotic");
+  } else {
+    console.log(bribes);
+  }
 }
